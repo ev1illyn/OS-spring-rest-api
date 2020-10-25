@@ -2,6 +2,7 @@ package com.algaworks.osticket.api.controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -39,15 +40,15 @@ public class OrdemServicoController {
 	private ModelMapper modelMapper;
 
 	@GetMapping
-	public List<OrdemServico> listar(){
-		return ordemServicoRepository.findAll();
+	public List<OrdemServicoModel> listar(){
+		return toCollectionModel(ordemServicoRepository.findAll());
 	}
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public OrdemServico adicionar(@Valid @RequestBody OrdemServico ordemServico) {
+	public OrdemServicoModel adicionar(@Valid @RequestBody OrdemServico ordemServico) {
 		
-		return ordemServicoService.adicionar(ordemServico);
+		return toModel(ordemServicoService.adicionar(ordemServico));
 	}
 	
 	@GetMapping("/{ordemServicoId}")
@@ -56,10 +57,7 @@ public class OrdemServicoController {
 		Optional<OrdemServico> ordemServico = ordemServicoRepository.findById(ordemServicoId);
 		
 		if (ordemServico.isPresent()) {
-			/* modelMapper vai instaciar o OrdemServicoModel e 
-			 * mapear/atribuir as propriedades do model OrdemServico
-			*/
-			OrdemServicoModel ordemServicoModel = modelMapper.map(ordemServico.get(), OrdemServicoModel.class);
+			OrdemServicoModel ordemServicoModel = toModel(ordemServico.get());
 			return ResponseEntity.ok(ordemServicoModel);
 		}
 		
@@ -90,6 +88,19 @@ public class OrdemServicoController {
 		ordemServicoService.remover(ordemServicoId);
 		
 		return ResponseEntity.noContent().build();
+	}
+	
+	/* modelMapper vai instanciar o OrdemServicoModel e 
+	 * mapear/atribuir as propriedades do model OrdemServico */
+	private OrdemServicoModel toModel(OrdemServico ordemServico) {
+		return modelMapper.map(ordemServico, OrdemServicoModel.class);
+	}
+	
+	/* retorna uma lista de OrdemServicoModel*/
+	private List<OrdemServicoModel> toCollectionModel(List<OrdemServico> ordensServico) {
+		return ordensServico.stream()
+				.map(ordemServico -> toModel(ordemServico))
+				.collect(Collectors.toList());
 	}
 	
 }
