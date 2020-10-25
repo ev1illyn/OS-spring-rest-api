@@ -38,6 +38,14 @@ public class ClienteController {
 		return clienteRepository.findAll();
 	}
 	
+	//RequestBody transforma JSON em objeto Cliente Java
+	@PostMapping
+	@ResponseStatus(code = HttpStatus.CREATED)
+	public Cliente adicionar(@Valid @RequestBody Cliente cliente){
+		
+		return cadastroClienteService.adicionar(cliente);
+	}
+	
 	@GetMapping("/{clienteId}")
 	public ResponseEntity<Cliente> buscar(@PathVariable Long clienteId) {
 		
@@ -49,14 +57,6 @@ public class ClienteController {
 		
 		return ResponseEntity.notFound().build();
 		
-	}
-	
-	//RequestBody transforma JSON em objeto Cliente Java
-	@PostMapping
-	@ResponseStatus(code = HttpStatus.CREATED)
-	public Cliente adicionar(@Valid @RequestBody Cliente cliente){
-		
-		return cadastroClienteService.adicionar(cliente);
 	}
 	
 	@PutMapping("/{clienteId}")

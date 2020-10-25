@@ -1,6 +1,7 @@
 package com.algaworks.osticket.api.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -42,6 +43,20 @@ public class OrdemServicoController {
 	public OrdemServico adicionar(@Valid @RequestBody OrdemServico ordemServico) {
 		
 		return ordemServicoService.adicionar(ordemServico);
+	}
+	
+	
+	@GetMapping("/{ordemServicoId}")
+	public ResponseEntity<OrdemServico> buscar(@PathVariable Long ordemServicoId) {
+
+		Optional<OrdemServico> ordemServico = ordemServicoRepository.findById(ordemServicoId);
+		
+		if (ordemServico.isPresent()) {
+			return ResponseEntity.ok(ordemServico.get());
+		}
+		
+		return ResponseEntity.notFound().build();
+		
 	}
 	
 	@PutMapping("/{ordemServicoId}")
