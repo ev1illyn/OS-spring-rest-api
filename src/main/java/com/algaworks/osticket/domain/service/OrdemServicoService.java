@@ -26,7 +26,8 @@ public class OrdemServicoService {
 
 		Cliente cliente = clienteRepository.findById(ordemServico.getCliente().getId())
 				.orElseThrow(() -> new NegocioException("Cliente não encontrado. Tente novamente!"));
-		
+
+		ordemServico.setCliente(cliente);
 		ordemServico.setStatus(StatusOrdemServico.ABERTA);
 		ordemServico.setDataAbertura(LocalDateTime.now());
 
