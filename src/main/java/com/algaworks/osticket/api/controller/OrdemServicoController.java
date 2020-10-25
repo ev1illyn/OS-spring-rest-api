@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.algaworks.osticket.api.model.OrdemServicoModel;
 import com.algaworks.osticket.domain.model.Cliente;
 import com.algaworks.osticket.domain.model.OrdemServico;
 import com.algaworks.osticket.domain.repository.OrdemServicoRepository;
@@ -32,6 +34,9 @@ public class OrdemServicoController {
 	
 	@Autowired
 	private OrdemServicoRepository ordemServicoRepository;
+	
+	@Autowired
+	private ModelMapper modelMapper;
 
 	@GetMapping
 	public List<OrdemServico> listar(){
@@ -45,14 +50,17 @@ public class OrdemServicoController {
 		return ordemServicoService.adicionar(ordemServico);
 	}
 	
-	
 	@GetMapping("/{ordemServicoId}")
-	public ResponseEntity<OrdemServico> buscar(@PathVariable Long ordemServicoId) {
+	public ResponseEntity<OrdemServicoModel> buscar(@PathVariable Long ordemServicoId) {
 
 		Optional<OrdemServico> ordemServico = ordemServicoRepository.findById(ordemServicoId);
 		
 		if (ordemServico.isPresent()) {
-			return ResponseEntity.ok(ordemServico.get());
+			/* modelMapper vai instaciar o OrdemServicoModel e 
+			 * mapear/atribuir as propriedades do model OrdemServico
+			*/
+			OrdemServicoModel ordemServicoModel = modelMapper.map(ordemServico.get(), OrdemServicoModel.class);
+			return ResponseEntity.ok(ordemServicoModel);
 		}
 		
 		return ResponseEntity.notFound().build();
@@ -83,5 +91,5 @@ public class OrdemServicoController {
 		
 		return ResponseEntity.noContent().build();
 	}
-
+	
 }
