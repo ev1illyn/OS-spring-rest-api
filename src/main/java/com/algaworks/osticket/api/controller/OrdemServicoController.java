@@ -110,4 +110,12 @@ public class OrdemServicoController {
 		return modelMapper.map(ordemServicoInput, OrdemServico.class);
 	}
 	
+
+	@PutMapping("/{ordemServicoId}/finalizacao")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void finalizar(@PathVariable Long ordemServicoId) {
+		ordemServicoService.finalizar(ordemServicoId);
+	}
+	
+	
 }

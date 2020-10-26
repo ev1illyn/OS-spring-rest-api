@@ -44,10 +44,22 @@ public class OrdemServicoService {
 	public void remover(Long ordemServicoId) {
 		ordemServicoRepository.deleteById(ordemServicoId);
 	}
+	
+	
+	public void finalizar(Long ordemServicoId) {
+		OrdemServico ordemServico = buscar(ordemServicoId);
+		ordemServico.finalizar();
+		
+		ordemServicoRepository.save(ordemServico);
+	}
+	
+	public OrdemServico buscar(Long ordemServicoId) {
+		return ordemServicoRepository.findById(ordemServicoId)
+				.orElseThrow(() -> new EntidadeNaoEncontradaException ("Ordem de serviço não encontrado. Tente novamente!"));
+	}
 
 	public Comentario adicionarComentario(Long ordemServicoId, String descricao) {
-		OrdemServico ordemServico = ordemServicoRepository.findById(ordemServicoId)
-				.orElseThrow(() -> new EntidadeNaoEncontradaException ("Ordem de serviço não encontrado. Tente novamente!"));
+		OrdemServico ordemServico = buscar(ordemServicoId);
 		Comentario comentario = new Comentario();
 		comentario.setDataEnvio(OffsetDateTime.now());
 		comentario.setDescricao(descricao);
