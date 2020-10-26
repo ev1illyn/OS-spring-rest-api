@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.algaworks.osticket.api.model.OrdemServicoInput;
 import com.algaworks.osticket.api.model.OrdemServicoModel;
 import com.algaworks.osticket.domain.model.Cliente;
 import com.algaworks.osticket.domain.model.OrdemServico;
@@ -46,8 +47,10 @@ public class OrdemServicoController {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public OrdemServicoModel adicionar(@Valid @RequestBody OrdemServico ordemServico) {
+	public OrdemServicoModel adicionar(@Valid @RequestBody OrdemServicoInput ordemServicoInput) {
 		
+		OrdemServico ordemServico = toEntity(ordemServicoInput);
+	
 		return toModel(ordemServicoService.adicionar(ordemServico));
 	}
 	
@@ -101,6 +104,10 @@ public class OrdemServicoController {
 		return ordensServico.stream()
 				.map(ordemServico -> toModel(ordemServico))
 				.collect(Collectors.toList());
+	}
+	
+	private OrdemServico toEntity(OrdemServicoInput ordemServicoInput) {
+		return modelMapper.map(ordemServicoInput, OrdemServico.class);
 	}
 	
 }
