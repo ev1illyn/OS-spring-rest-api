@@ -39,7 +39,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
 		return handleExceptionInternal(ex, problema, new HttpHeaders(), status, request);
 	}
 
-	@ExceptionHandler(NegocioException.class)
+	@ExceptionHandler(EntidadeNaoEncontradaException.class)
 	public ResponseEntity<Object> handleEntidadeNaoEncontrada(EntidadeNaoEncontradaException ex, 
 			WebRequest request) {
 		var status = HttpStatus.BAD_REQUEST;
