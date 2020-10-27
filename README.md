@@ -38,3 +38,17 @@
 ![validation](https://user-images.githubusercontent.com/30708285/97243429-16079280-17d5-11eb-9f27-9db42562cc68.png)
 ### valid specific client post request - null name and malformed email
 ![validation](https://user-images.githubusercontent.com/30708285/97243424-14d66580-17d5-11eb-9a49-c5c45841f407.png)
+
+### Reference Documentation
+For further reference, please consider the following sections:
+
+* [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)
+
+### Guides
+The following guides illustrate how to use some features concretely:
+
+* [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)
+* [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)
+* [Building REST services with Spring](https://spring.io/guides/tutorials/bookmarks/)
+
+
