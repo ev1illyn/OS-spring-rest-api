@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.algaworks.osticket.api.model.ComentarioInput;
 import com.algaworks.osticket.api.model.ComentarioModel;
-import com.algaworks.osticket.api.model.OrdemServicoModel;
 import com.algaworks.osticket.domain.exception.EntidadeNaoEncontradaException;
 import com.algaworks.osticket.domain.model.Comentario;
 import com.algaworks.osticket.domain.model.OrdemServico;
